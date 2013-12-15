@@ -92,7 +92,7 @@ PARALLAX EFFECTS...........................1474
 
         
         #header-section {
-            background: url(../img/background.png) bottom center repeat fixed;
+            background: url(../img/background.png) bottom center no-repeat fixed;
             height: 650px;
             width: 100%;
             max-width:100%;
