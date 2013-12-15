@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    clean: ['assets/v<%= pkg.version %>'],
     concat: {
       dist: {
         src: [
@@ -47,9 +48,10 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-copy');
  
-  grunt.registerTask('default', ['concat', 'cssmin', 'copy']);
+  grunt.registerTask('default', ['clean', 'concat', 'cssmin', 'copy']);
 };
