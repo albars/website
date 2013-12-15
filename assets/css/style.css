@@ -81,7 +81,7 @@ PARALLAX EFFECTS...........................1474
     section #header-section {   
         padding-bottom:70px;
         display:inline-block;
-        min-height:650px;
+        min-height:750px;
         position:relative;
         padding-top:0px;
         -webkit-box-shadow: none;
@@ -92,20 +92,18 @@ PARALLAX EFFECTS...........................1474
 
         
         #header-section {
-            background: url(../img/background.png) bottom center no-repeat fixed;
+            background: url(../img/background.png) bottom center repeat fixed;
             height: 650px;
             width: 100%;
             max-width:100%;
             z-index: -999;
-            padding-top:0px;
-            
+            padding-top:0px;      
             }
-            #header-section .hero-unit {
-                
-                
+
+            #header-section .hero-unit {    
                 z-index: 1;
             }
-            
+
             #header-section .wrap-hero{
                 position:fixed;
                 top:45px;
@@ -116,24 +114,27 @@ PARALLAX EFFECTS...........................1474
                 display:block;
             
             }
+
             #header-section .logowrap{
                 position:absolute;
                 top:10px;
             }
+
             #header-section .hero-unit.hide{
                 
-                 filter: alpha(opacity=0);
-                 filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0); /* IE 5.5+*/
+                filter: alpha(opacity=0);
+                filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0); /* IE 5.5+*/
                 -moz-opacity: 0; /* Mozilla 1.6 - */
                 -khtml-opacity: 0; /* Konqueror 3.1, Safari 1.1 */
                 opacity: 0; /* CSS3 - Mozilla 1.7b +, Firefox 0.9 +, Safari 1.2+, Opera 9+ */
-                    -moz-transition: opacity 2s ease-in-out;
+                -moz-transition: opacity 2s ease-in-out;
                 -o-transition: opacity 2s ease-in-out;
                 -webkit-transition: opacity 2s ease-in-out;
                 -ms-transition: opacity 2s ease-in-out;
                 transition: opacity 2s ease-in-out;
 
             }
+
             #header-section .hero-unit{
                 background:none;
                 -moz-transition: opacity 2s ease-in-out;
@@ -149,6 +150,7 @@ PARALLAX EFFECTS...........................1474
                 margin-right:auto;
                 
             }
+
             .inner-wrap-hero{
                 padding:10px 20px;
                 text-align:center;
