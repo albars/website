@@ -1,39 +1,39 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    clean: ['assets/v<%= pkg.version %>'],
+    clean: ['assets'],
     concat: {
       css: {
         src: [
-          'assets/css/bootstrap.css',
-          'assets/css/bootstrap-responsive.css',
-          'assets/css/style.css',
-          'assets/css/font-awesome.css'
+          'assets.dev/css/bootstrap.css',
+          'assets.dev/css/bootstrap-responsive.css',
+          'assets.dev/css/style.css',
+          'assets.dev/css/font-awesome.css'
         ],
-        dest: 'assets/v<%= pkg.version %>/css/<%= pkg.name %>.css'
+        dest: 'assets/css/<%= pkg.name %>.css'
       },
       js: {
         src: [
-          'assets/js/jquery.js',
-          'assets/js/bootstrap-transition.js',
-          'assets/js/bootstrap-scrollspy.js',
-          'assets/js/jquery.prettyPhoto.js',
-          'assets/js/tweetable.jquery.js',
-          'assets/js/jquery.timeago.js',
-          'assets/js/jquery.localscroll-1.2.7.js',
-          'assets/js/jquery.inview.js',
-          'assets/js/jquery.scrollTo-1.4.2.js',
-          'assets/js/jquery.parallax-1.1.3.js',
-          'assets/js/custom.js'
+          'assets.dev/js/jquery.js',
+          'assets.dev/js/bootstrap-transition.js',
+          'assets.dev/js/bootstrap-scrollspy.js',
+          'assets.dev/js/jquery.prettyPhoto.js',
+          'assets.dev/js/tweetable.jquery.js',
+          'assets.dev/js/jquery.timeago.js',
+          'assets.dev/js/jquery.localscroll-1.2.7.js',
+          'assets.dev/js/jquery.inview.js',
+          'assets.dev/js/jquery.scrollTo-1.4.2.js',
+          'assets.dev/js/jquery.parallax-1.1.3.js',
+          'assets.dev/js/custom.js'
         ],
-        dest: 'assets/v<%= pkg.version %>/js/<%= pkg.name %>.js'
+        dest: 'assets/js/<%= pkg.name %>.js'
       }
     },
     cssmin: {
       minify: {
         expand: true,
         src: [
-          'assets/v<%= pkg.version %>/css/*.css'
+          'assets/css/*.css'
         ],
         ext: '.min.css'
       }
@@ -41,7 +41,19 @@ module.exports = function(grunt) {
     uglify: {
       minify: {
         files: {
-          'assets/v<%= pkg.version %>/js/<%= pkg.name %>.min.js': ['assets/v<%= pkg.version %>/js/<%= pkg.name %>.js']
+          'assets/js/<%= pkg.name %>.min.js': ['assets/js/<%= pkg.name %>.js']
+        }
+      }
+    },
+    htmlmin: {
+      minify: {
+        options: {
+          removeComments: true,
+          collapseWhitespace: false,
+          removeRedundantAttributes: true
+        },
+        files: {
+          'index.html': 'index.dev.html'
         }
       }
     },
@@ -50,32 +62,57 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            cwd: 'assets/font/',
+            cwd: 'assets.dev/font/',
             src: ['**'],
-            dest: 'assets/v<%= pkg.version %>/font/'
+            dest: 'assets/font/'
           },
           {
             expand: true,
-            cwd: 'assets/img/',
+            cwd: 'assets.dev/img/',
             src: ['**'],
-            dest: 'assets/v<%= pkg.version %>/img/'
+            dest: 'assets/img/'
           },
           {
             expand: true,
-            cwd: 'assets/ico/',
+            cwd: 'assets.dev/ico/',
             src: ['**'],
-            dest: 'assets/v<%= pkg.version %>/ico/'
+            dest: 'assets/ico/'
           }
         ]
+      }
+    },
+    cacheBust: {
+      assets: {
+        files: [{
+          src: ['index.html']
+        }]
+      }
+    },
+    watch: {
+      js: {
+        files: ['assets.dev/js/*.js'],
+        tasks: ['concat', 'uglify', 'htmlmin', 'cacheBust'],
+        options: {
+          spawn: false
+        }
+      },
+      css: {
+        files: ['assets.dev/css/*.css'],
+        tasks: ['concat', 'css', 'htmlmin', 'cacheBust'],
+        options: {
+          spawn: false
+        }
+      },
+      html: {
+        files: ['index.dev.html'],
+        tasks: ['htmlmin'],
+        options: {
+          spawn: false
+        }
       }
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-copy');
- 
-  grunt.registerTask('default', ['clean', 'concat', 'cssmin', 'uglify', 'copy']);
+  require('load-grunt-tasks')(grunt);
+  grunt.registerTask('default', ['clean', 'concat', 'cssmin', 'uglify', 'htmlmin', 'copy', 'cacheBust']);
 };
