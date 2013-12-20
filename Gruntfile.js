@@ -49,7 +49,7 @@ module.exports = function (grunt) {
       minify: {
         options: {
           removeComments: true,
-          collapseWhitespace: false,
+          collapseWhitespace: true,
           removeRedundantAttributes: true
         },
         files: {
@@ -57,20 +57,46 @@ module.exports = function (grunt) {
         }
       }
     },
+    imagemin: {
+      png: {
+        options: {
+          optimizationLevel: 7
+        },
+        files: [{
+          expand: true,
+          cwd: 'assets.dev/img',
+          src: ['**/*.png'],
+          dest: 'assets/img/',
+          ext: '.png'
+        }]
+      },
+      jpg: {
+        options: {
+          progressive: true
+        },
+        files: [{
+          expand: true,
+          cwd: 'assets.dev/img',
+          src: ['**/*.jpg'],
+          dest: 'assets/img/',
+          ext: '.jpg'
+        }]
+      }
+    },
     copy: {
       main: {
         files: [
           {
             expand: true,
-            cwd: 'assets.dev/font/',
-            src: ['**'],
-            dest: 'assets/font/'
+            cwd: 'assets.dev/img/',
+            src: ['**/*.gif'],
+            dest: 'assets/img/'
           },
           {
             expand: true,
-            cwd: 'assets.dev/img/',
+            cwd: 'assets.dev/font/',
             src: ['**'],
-            dest: 'assets/img/'
+            dest: 'assets/font/'
           },
           {
             expand: true,
@@ -84,7 +110,7 @@ module.exports = function (grunt) {
     cacheBust: {
       assets: {
         files: [{
-          src: ['index.html']
+          src: ['index.html', 'assets/css/<%= pkg.name %>.css']
         }]
       }
     },
@@ -114,5 +140,5 @@ module.exports = function (grunt) {
   });
 
   require('load-grunt-tasks')(grunt);
-  grunt.registerTask('default', ['clean', 'concat', 'cssmin', 'uglify', 'htmlmin', 'copy', 'cacheBust']);
+  grunt.registerTask('default', ['clean', 'concat', 'cssmin', 'uglify', 'htmlmin', 'imagemin', 'copy', 'cacheBust']);
 };
