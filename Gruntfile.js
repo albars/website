@@ -124,7 +124,7 @@ module.exports = function (grunt) {
       },
       css: {
         files: ['assets.dev/css/*.css'],
-        tasks: ['concat', 'css', 'htmlmin', 'cacheBust'],
+        tasks: ['concat', 'cssmin', 'htmlmin', 'cacheBust'],
         options: {
           spawn: false
         }
